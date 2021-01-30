@@ -126,6 +126,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										style="font-size: 20px; text-align: center;">
 										<option value="0">X-workz.in</option>
 										<option value="1">Gmail.com</option>
+										<option value="2">X-workz.com</option>
 									</select>
 								</div>
 							</div>
@@ -168,6 +169,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											name="msgType">
 												<option value="0">X-workz.in</option>
 												<option value="1">Gmail.com</option>
+												<option value="2">X-workz.com</option>
 										</select></td>
 									</tr>
 									<tr>

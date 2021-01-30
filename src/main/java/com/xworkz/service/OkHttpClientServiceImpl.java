@@ -27,6 +27,7 @@ import com.xworkz.dto.MailChimpList;
 import com.xworkz.dto.MailChimpMailDetails;
 import com.xworkz.dto.SendMailDTO;
 import com.xworkz.util.EncryptionHelper;
+import com.xworkz.util.ManageAccounts;
 
 @Service
 @Configuration
@@ -34,27 +35,15 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 
 	@Value("${auth}")
 	private String auth;
-	@Value("${replyTo}")
-	private String replyTo;
-	@Value("${fromName}")
-	private String fromName;
-	@Value("${http}")
-	private String http;
-
-	@Value("${auth1}")
-	private String auth1;
-	@Value("${replyTo1}")
-	private String replyTo1;
-	@Value("${fromName}")
-	private String fromName1;
-	@Value("${http1}")
-	private String http1;
+	 
 	@Value("${bulkMailTemplate}")
 	private String templatesLink;
-	private Account accountId = Account.Default;
 
 	@Autowired
 	EncryptionHelper helper;
+
+	@Autowired
+	ManageAccounts manageAccounts;
 	
 	private Logger logger = LoggerFactory.getLogger(OkHttpClientServiceImpl.class);
 
@@ -63,21 +52,12 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	}
 
 	public boolean sendCompaign(String compaignId, Integer integer) {
-		String a;
-		String rt;
-		String fn;
-		String htp;
-		if (integer == accountId.getId()) {
-			a = auth1;
-			rt = replyTo1;
-			fn = fromName1;
-			htp = http1;
-		} else {
-			a = auth;
-			rt = replyTo;
-			fn = fromName;
-			htp = http;
-		}
+		String[] user = manageAccounts.selectUser(integer);
+
+		String a = user[0];
+		String rt = user[1];
+		String fn = user[2];
+		String htp = user[3];
 		try {
 			OkHttpClient client = new OkHttpClient();
 			MediaType mediaType = MediaType.parse("application/json");
@@ -118,21 +98,12 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	}
 
 	public boolean generateContent(String campaignId, SendMailDTO dto) {
-		String a;
-		String rt;
-		String fn;
-		String htp;
-		if (dto.getMsgType() == accountId.getId()) {
-			a = auth1;
-			rt = replyTo1;
-			fn = fromName1;
-			htp = http1;
-		} else {
-			a = auth;
-			rt = replyTo;
-			fn = fromName;
-			htp = http;
-		}
+		String[] user = manageAccounts.selectUser(dto.getMsgType());
+
+		String a = user[0];
+		String rt = user[1];
+		String fn = user[2];
+		String htp = user[3];
 //		try {
 //			String finalHtmlString = getHTMLTextFromFile(dto);
 //			if (finalHtmlString != null) {
@@ -178,21 +149,12 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	}
 
 	public String createCompaign(String listId, SendMailDTO dto) {
-		String a;
-		String rt;
-		String fn;
-		String htp;
-		if (dto.getMsgType() == accountId.getId()) {
-			a = auth1;
-			rt = replyTo1;
-			fn = fromName1;
-			htp = http1;
-		} else {
-			a = auth;
-			rt = replyTo;
-			fn = fromName;
-			htp = http;
-		}
+		String[] user = manageAccounts.selectUser(dto.getMsgType());
+
+		String a = user[0];
+		String rt = user[1];
+		String fn = user[2];
+		String htp = user[3];
 		try {
 			OkHttpClient client = new OkHttpClient();
 			MediaType mediaType = MediaType.parse("application/json");
@@ -233,21 +195,12 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	}
 
 	public JsonObject createJsonObject(String listId, SendMailDTO dto) {
-		String a;
-		String rt;
-		String fn;
-		String htp;
-		if (dto.getMsgType() == accountId.getId()) {
-			a = auth1;
-			rt = replyTo1;
-			fn = fromName1;
-			htp = http1;
-		} else {
-			a = auth;
-			rt = replyTo;
-			fn = fromName;
-			htp = http;
-		}
+		String[] user = manageAccounts.selectUser(dto.getMsgType());
+
+		String a = user[0];
+		String rt = user[1];
+		String fn = user[2];
+		String htp = user[3];
 
 		JsonObject lsId = new JsonObject();
 		lsId.addProperty("list_id", listId);
@@ -279,21 +232,12 @@ public class OkHttpClientServiceImpl implements OkHttpClientService {
 	}
 
 	public String getAllMailChimpList(Integer mailid) {
-		String a;
-		String rt;
-		String fn;
-		String htp;
-		if (mailid == accountId.getId()) {
-			a = auth1;
-			rt = replyTo1;
-			fn = fromName1;
-			htp = http1;
-		} else {
-			a = auth;
-			rt = replyTo;
-			fn = fromName;
-			htp = http;
-		}
+		String[] user = manageAccounts.selectUser(mailid);
+
+		String a = user[0];
+		String rt = user[1];
+		String fn = user[2];
+		String htp = user[3];
 		try {
 			OkHttpClient client = new OkHttpClient();
 			Request request = new Request.Builder().url("https://" + htp + ".api.mailchimp.com/3.0/lists").get()
